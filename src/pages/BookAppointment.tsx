@@ -115,74 +115,76 @@ const BookAppointment = () => {
   const timeSlots = generateTimeSlots();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ivory via-white to-gold/10">
+    <div className="min-h-screen luxury-gradient">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8 text-center">
-            <h1 className="text-4xl font-playfair font-bold text-navy mb-4">Book Your Appointment</h1>
-            <p className="text-navy/70 text-lg">Schedule a consultation for your selected items</p>
+      <div className="pt-32 pb-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12 text-center animate-fade-in">
+            <h1 className="text-5xl font-playfair font-bold text-navy mb-6">Book Your Appointment</h1>
+            <p className="text-navy/70 text-xl max-w-3xl mx-auto leading-relaxed">Schedule a consultation for your selected items</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Cart Summary */}
-            <Card className="border-gold/20 shadow-lg">
+            <Card className="border-gold/20 shadow-luxury rounded-3xl bg-white/90 backdrop-blur-sm animate-fade-in" style={{ animationDelay: '0.1s' }}>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-navy">
-                  <MessageSquare className="h-5 w-5" />
+                <CardTitle className="flex items-center space-x-3 text-navy font-playfair text-2xl">
+                  <MessageSquare className="h-6 w-6 text-gold" />
                   <span>Consultation Items</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-8">
                 {items.length > 0 ? (
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {items.map((item) => (
-                      <div key={item.productId} className="flex items-center space-x-3 p-3 bg-gold/5 rounded-lg">
+                      <div key={item.productId} className="flex items-center space-x-4 p-4 bg-gold/10 rounded-2xl border border-gold/20 hover:bg-gold/15 transition-colors duration-300">
                         <img 
                           src={item.image || '/placeholder.svg'} 
                           alt={item.name}
-                          className="w-16 h-16 object-cover rounded-md"
+                          className="w-20 h-20 object-cover rounded-xl shadow-sm"
                         />
                         <div className="flex-1">
-                          <h3 className="font-medium text-navy">{item.name}</h3>
-                          <div className="flex items-center justify-between mt-1">
-                            <span className="text-gold font-semibold">₹{item.price.toLocaleString()}</span>
-                            <Badge variant="secondary">Qty: {item.quantity}</Badge>
+                          <h3 className="font-playfair font-bold text-navy text-lg">{item.name}</h3>
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-gold font-bold text-lg">₹{item.price.toLocaleString()}</span>
+                            <Badge className="bg-navy text-white font-bold px-3 py-1 rounded-full">Qty: {item.quantity}</Badge>
                           </div>
                         </div>
                       </div>
                     ))}
-                    <div className="border-t border-gold/20 pt-4">
-                      <div className="flex justify-between items-center text-lg font-semibold text-navy">
+                    <div className="border-t border-gold/30 pt-6">
+                      <div className="flex justify-between items-center text-xl font-bold text-navy bg-gold/10 rounded-2xl p-4">
                         <span>Total Value:</span>
-                        <span className="text-gold">₹{total.toLocaleString()}</span>
+                        <span className="text-gold text-2xl">₹{total.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center py-8">
-                    <MessageSquare className="h-12 w-12 text-gold/50 mx-auto mb-4" />
-                    <p className="text-navy/60">No items selected for consultation</p>
-                    <p className="text-sm text-navy/50 mt-2">Add items to your cart first</p>
+                  <div className="text-center py-12">
+                    <div className="bg-gold/10 rounded-full p-6 w-20 h-20 mx-auto mb-6">
+                      <MessageSquare className="h-8 w-8 text-gold mx-auto" />
+                    </div>
+                    <p className="text-navy/60 text-lg font-medium">No items selected for consultation</p>
+                    <p className="text-navy/50 mt-2">Add items to your cart first</p>
                   </div>
                 )}
               </CardContent>
             </Card>
 
             {/* Appointment Form */}
-            <Card className="border-gold/20 shadow-lg">
+            <Card className="border-gold/20 shadow-luxury rounded-3xl bg-white/90 backdrop-blur-sm animate-fade-in" style={{ animationDelay: '0.2s' }}>
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2 text-navy">
-                  <Calendar className="h-5 w-5" />
+                <CardTitle className="flex items-center space-x-3 text-navy font-playfair text-2xl">
+                  <Calendar className="h-6 w-6 text-gold" />
                   <span>Appointment Details</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <CardContent className="p-8">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
-                      <Label htmlFor="appointment_date" className="text-navy">Date *</Label>
+                      <Label htmlFor="appointment_date" className="text-navy font-bold text-base">Date *</Label>
                       <Input
                         id="appointment_date"
                         name="appointment_date"
@@ -191,18 +193,18 @@ const BookAppointment = () => {
                         onChange={handleInputChange}
                         min={new Date().toISOString().split('T')[0]}
                         required
-                        className="border-gold/30 focus:border-gold"
+                        className="border-2 border-gold/30 focus:border-gold rounded-xl mt-2 h-12"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="time" className="text-navy">Time *</Label>
+                      <Label htmlFor="time" className="text-navy font-bold text-base">Time *</Label>
                       <select
                         id="time"
                         name="time"
                         value={formData.time}
                         onChange={(e) => setFormData(prev => ({...prev, time: e.target.value}))}
                         required
-                        className="w-full px-3 py-2 border border-gold/30 rounded-md focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold"
+                        className="w-full px-4 py-3 border-2 border-gold/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold mt-2 h-12 font-medium"
                       >
                         <option value="">Select time</option>
                         {timeSlots.map(slot => (
@@ -213,9 +215,9 @@ const BookAppointment = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="customer_name" className="text-navy">Full Name *</Label>
+                    <Label htmlFor="customer_name" className="text-navy font-bold text-base">Full Name *</Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gold" />
+                      <User className="absolute left-4 top-4 h-5 w-5 text-gold" />
                       <Input
                         id="customer_name"
                         name="customer_name"
@@ -223,15 +225,15 @@ const BookAppointment = () => {
                         onChange={handleInputChange}
                         placeholder="Enter your full name"
                         required
-                        className="pl-10 border-gold/30 focus:border-gold"
+                        className="pl-12 border-2 border-gold/30 focus:border-gold rounded-xl mt-2 h-12"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="customer_email" className="text-navy">Email *</Label>
+                    <Label htmlFor="customer_email" className="text-navy font-bold text-base">Email *</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-gold" />
+                      <Mail className="absolute left-4 top-4 h-5 w-5 text-gold" />
                       <Input
                         id="customer_email"
                         name="customer_email"
@@ -240,15 +242,15 @@ const BookAppointment = () => {
                         onChange={handleInputChange}
                         placeholder="Enter your email"
                         required
-                        className="pl-10 border-gold/30 focus:border-gold"
+                        className="pl-12 border-2 border-gold/30 focus:border-gold rounded-xl mt-2 h-12"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="customer_phone" className="text-navy">Phone Number</Label>
+                    <Label htmlFor="customer_phone" className="text-navy font-bold text-base">Phone Number</Label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-3 h-4 w-4 text-gold" />
+                      <Phone className="absolute left-4 top-4 h-5 w-5 text-gold" />
                       <Input
                         id="customer_phone"
                         name="customer_phone"
@@ -256,37 +258,37 @@ const BookAppointment = () => {
                         value={formData.customer_phone}
                         onChange={handleInputChange}
                         placeholder="Enter your phone number"
-                        className="pl-10 border-gold/30 focus:border-gold"
+                        className="pl-12 border-2 border-gold/30 focus:border-gold rounded-xl mt-2 h-12"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <Label htmlFor="notes" className="text-navy">Additional Notes</Label>
+                    <Label htmlFor="notes" className="text-navy font-bold text-base">Additional Notes</Label>
                     <Textarea
                       id="notes"
                       name="notes"
                       value={formData.notes}
                       onChange={handleInputChange}
                       placeholder="Any specific requirements or questions..."
-                      rows={3}
-                      className="border-gold/30 focus:border-gold resize-none"
+                      rows={4}
+                      className="border-2 border-gold/30 focus:border-gold resize-none rounded-xl mt-2"
                     />
                   </div>
 
                   <Button 
                     type="submit" 
                     disabled={loading || items.length === 0}
-                    className="w-full bg-gold hover:bg-gold/90 text-navy font-semibold py-3 h-auto"
+                    className="w-full bg-gold hover:bg-gold-dark text-navy font-bold py-4 h-auto rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-luxury-lg"
                   >
                     {loading ? (
                       <>
-                        <Clock className="animate-spin h-4 w-4 mr-2" />
+                        <Clock className="animate-spin h-5 w-5 mr-2" />
                         Booking Appointment...
                       </>
                     ) : (
                       <>
-                        <Calendar className="h-4 w-4 mr-2" />
+                        <Calendar className="h-5 w-5 mr-2" />
                         Book Appointment
                       </>
                     )}

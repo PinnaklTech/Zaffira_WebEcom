@@ -105,85 +105,85 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen bg-ivory">
+    <div className="min-h-screen luxury-gradient">
       <Navigation />
-      <div className="pt-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <h1 className="text-4xl font-playfair font-bold text-navy mb-8">Your Cart</h1>
+      <div className="pt-32">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+          <h1 className="text-5xl font-playfair font-bold text-navy mb-12 animate-fade-in">Your Cart</h1>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-luxury border border-gold/20 p-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
             {items.map((item) => (
-              <div key={item.productId} className="flex items-center gap-4 py-4 border-b border-gray-200 last:border-b-0">
+              <div key={item.productId} className="flex items-center gap-6 py-6 border-b border-gold/20 last:border-b-0 hover:bg-gold/5 rounded-2xl px-4 transition-colors duration-300">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                  className="w-24 h-24 object-cover rounded-2xl flex-shrink-0 shadow-sm"
                 />
                 
                 <div className="flex-1">
-                  <h3 className="font-playfair font-semibold text-navy text-lg">{item.name}</h3>
-                  <p className="text-gray-600">₹{item.price.toLocaleString('en-IN')}</p>
+                  <h3 className="font-playfair font-bold text-navy text-xl mb-2">{item.name}</h3>
+                  <p className="text-navy/70 font-semibold text-lg">₹{item.price.toLocaleString('en-IN')}</p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3 bg-white rounded-2xl border-2 border-gold/30 p-1">
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                    className="h-8 w-8"
+                    className="h-10 w-10 border-0 hover:bg-gold/20 rounded-xl"
                     disabled={loading}
                   >
-                    <Minus className="h-4 w-4" />
+                    <Minus className="h-5 w-5" />
                   </Button>
                   
-                  <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                  <span className="w-12 text-center font-bold text-lg">{item.quantity}</span>
                   
                   <Button
                     variant="outline"
                     size="icon"
                     onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                    className="h-8 w-8"
+                    className="h-10 w-10 border-0 hover:bg-gold/20 rounded-xl"
                     disabled={loading}
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-5 w-5" />
                   </Button>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-semibold text-navy">
+                  <p className="font-bold text-navy text-xl mb-2">
                     ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                   </p>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => handleRemoveItem(item.productId)}
-                    className="text-red-500 hover:text-red-700 mt-1"
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-xl"
                     disabled={loading}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
             ))}
 
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-semibold text-navy">Total: ₹{total.toLocaleString('en-IN')}</span>
-                <span className="text-gray-600">({itemCount} items)</span>
+            <div className="mt-8 pt-8 border-t border-gold/30">
+              <div className="flex justify-between items-center mb-8 bg-gold/10 rounded-2xl p-6">
+                <span className="text-2xl font-bold text-navy">Total: ₹{total.toLocaleString('en-IN')}</span>
+                <span className="text-navy/70 font-semibold">({itemCount} items)</span>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-6">
                 <Button
                   variant="outline"
                   onClick={() => navigate('/products')}
-                  className="flex-1"
+                  className="flex-1 border-2 border-gold text-gold hover:bg-gold hover:text-navy font-bold py-4 rounded-2xl transition-all duration-300"
                   disabled={loading}
                 >
                   Continue Shopping
                 </Button>
                 <Button
                   onClick={() => navigate('/book-appointment')}
-                  className="flex-1 bg-gold hover:bg-gold-dark text-navy font-semibold"
+                  className="flex-1 bg-gold hover:bg-gold-dark text-navy font-bold py-4 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-luxury-lg"
                   disabled={loading}
                 >
                   Book Appointment

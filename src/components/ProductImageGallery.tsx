@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn, Maximize2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ProductImage } from '@/types/product';
 
 interface ProductImageGalleryProps {
@@ -11,6 +12,7 @@ interface ProductImageGalleryProps {
   showThumbnails?: boolean;
   isOutOfStock?: boolean;
   showArrows?: boolean;
+  enableZoom?: boolean;
 }
 
 const ProductImageGallery = ({ 
@@ -19,9 +21,11 @@ const ProductImageGallery = ({
   className = '', 
   showThumbnails = false,
   isOutOfStock = false,
-  showArrows = false
+  showArrows = false,
+  enableZoom = true
 }: ProductImageGalleryProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
 
   if (!images || images.length === 0) {
     return (
@@ -29,7 +33,7 @@ const ProductImageGallery = ({
         <img
           src="/placeholder.svg"
           alt={productName}
-          className={`w-full h-full object-cover ${isOutOfStock ? 'grayscale' : ''}`}
+          className={`w-full h-full object-cover transition-transform duration-500 ${isOutOfStock ? 'grayscale' : ''}`}
         />
       </div>
     );
@@ -53,24 +57,33 @@ const ProductImageGallery = ({
   return (
     <div className={`relative ${className}`}>
       {/* Main Image */}
-      <div className="aspect-square overflow-hidden relative group">
+      <div className="aspect-square overflow-hidden relative group cursor-pointer" onClick={() => enableZoom && setIsZoomOpen(true)}>
         <img
           src={currentImage.url}
           alt={currentImage.altText || productName}
-          className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 ${isOutOfStock ? 'grayscale' : ''}`}
+          className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isOutOfStock ? 'grayscale' : ''}`}
         />
+        
+        {/* Zoom Icon */}
+        {enableZoom && (
+          <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
+              <ZoomIn className="h-4 w-4 text-navy" />
+            </div>
+          </div>
+        )}
         
         {/* Image Counter Badge */}
         {hasMultipleImages && (
-          <div className="absolute top-3 right-3 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-full">
+          <div className="absolute top-4 right-4 bg-navy/80 backdrop-blur-sm text-white text-sm px-3 py-1.5 rounded-full font-medium shadow-lg">
             {currentImageIndex + 1}/{images.length}
           </div>
         )}
 
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+            <span className="bg-red-500 text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg">
               Out of Stock
             </span>
           </div>
@@ -82,40 +95,69 @@ const ProductImageGallery = ({
             <Button
               variant="outline"
               size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-luxury hover:scale-110"
               onClick={prevImage}
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-6 w-6" />
             </Button>
             <Button
               variant="outline"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/90 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-luxury hover:scale-110"
               onClick={nextImage}
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-6 w-6" />
             </Button>
           </>
         )}
       </div>
 
+      {/* Zoom Modal */}
+      {enableZoom && (
+        <Dialog open={isZoomOpen} onOpenChange={setIsZoomOpen}>
+          <DialogContent className="max-w-6xl glass-effect border-gold/20 rounded-3xl p-2">
+            <div className="relative">
+              <img
+                src={currentImage.url}
+                alt={currentImage.altText || productName}
+                className="w-full h-auto max-h-[80vh] object-contain rounded-2xl"
+              />
+              {hasMultipleImages && (
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToImage(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentImageIndex 
+                          ? 'bg-gold scale-125' 
+                          : 'bg-white/60 hover:bg-white/80'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
       {/* Thumbnails */}
       {showThumbnails && hasMultipleImages && (
-        <div className="flex gap-2 mt-3 overflow-x-auto pb-2">
+        <div className="flex gap-3 mt-4 overflow-x-auto pb-2">
           {images.map((image, index) => (
             <button
               key={index}
               onClick={() => goToImage(index)}
-              className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+              className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'border-gold shadow-md' 
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-gold shadow-luxury scale-105' 
+                  : 'border-gray-200 hover:border-gold/50 hover:scale-105'
               }`}
             >
               <img
                 src={image.url}
                 alt={image.altText || `${productName} view ${index + 1}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
               />
             </button>
           ))}
@@ -124,16 +166,16 @@ const ProductImageGallery = ({
 
       {/* Dot Indicators for Mobile */}
       {hasMultipleImages && !showThumbnails && (
-        <div className="flex justify-center gap-1 mt-3 sm:hidden">
+        <div className="flex justify-center gap-2 mt-4 sm:hidden">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => goToImage(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'bg-gold' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
+                  ? 'bg-gold scale-125' 
+                  : 'bg-gray-300 hover:bg-gold/50 hover:scale-110'
+              } shadow-sm`}
             />
           ))}
         </div>

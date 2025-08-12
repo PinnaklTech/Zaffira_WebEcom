@@ -95,44 +95,44 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ivory via-white to-gold/10 flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen luxury-gradient flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <Link to="/" className="text-4xl font-playfair font-bold text-navy hover:text-gold transition-colors duration-300">
+        <div className="text-center mb-10 animate-fade-in">
+          <Link to="/" className="text-5xl font-playfair font-bold text-navy hover:text-gold transition-colors duration-300">
             Zaffira
           </Link>
-          <p className="text-navy/60 mt-2 font-inter">Luxury Jewelry Collection</p>
+          <p className="text-navy/60 mt-3 font-inter text-lg">Luxury Jewelry Collection</p>
           {location.state?.from && (
-            <p className="text-sm text-gold mt-1">Sign in to continue your journey</p>
+            <p className="text-gold mt-2 font-medium">Sign in to continue your journey</p>
           )}
         </div>
 
         {/* Auth Card */}
-        <Card className="bg-white/90 backdrop-blur-lg shadow-2xl border border-white/30 rounded-3xl overflow-hidden">
-          <CardHeader className="text-center bg-gradient-to-r from-navy to-navy-light text-white py-8">
-            <CardTitle className="text-2xl font-playfair">
+        <Card className="glass-effect shadow-luxury-lg border border-gold/20 rounded-3xl overflow-hidden animate-scale-in">
+          <CardHeader className="text-center bg-gradient-to-r from-navy via-navy-light to-navy text-white py-10">
+            <CardTitle className="text-3xl font-playfair font-bold">
               {isLogin ? 'Welcome Back' : 'Create Account'}
             </CardTitle>
-            <CardDescription className="text-white/80 font-inter">
+            <CardDescription className="text-white/90 font-inter text-lg mt-2">
               {isLogin ? 'Sign in to your account' : 'Join our exclusive collection'}
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <CardContent className="p-10">
+            <form onSubmit={handleSubmit} className="space-y-8">
               {!isLogin && (
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-navy font-medium">Full Name</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="name" className="text-navy font-bold text-base">Full Name</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-navy/60 h-4 w-4" />
+                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold h-5 w-5" />
                     <Input
                       id="name"
                       name="name"
                       type="text"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className="pl-10 border-navy/20 focus:border-gold focus:ring-gold/20 rounded-xl"
+                      className="pl-12 border-2 border-gold/30 focus:border-gold focus:ring-gold/20 rounded-xl h-12"
                       placeholder="John Doe"
                       required={!isLogin}
                     />
@@ -140,50 +140,50 @@ const Auth = () => {
                 </div>
               )}
 
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-navy font-medium">Email</Label>
+              <div className="space-y-3">
+                <Label htmlFor="email" className="text-navy font-bold text-base">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-navy/60 h-4 w-4" />
+                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold h-5 w-5" />
                   <Input
                     id="email"
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="pl-10 border-navy/20 focus:border-gold focus:ring-gold/20 rounded-xl"
+                    className="pl-12 border-2 border-gold/30 focus:border-gold focus:ring-gold/20 rounded-xl h-12"
                     placeholder="john@example.com"
                     required
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-navy font-medium">Password</Label>
+              <div className="space-y-3">
+                <Label htmlFor="password" className="text-navy font-bold text-base">Password</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-navy/60 h-4 w-4" />
+                  <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gold h-5 w-5" />
                   <Input
                     id="password"
                     name="password"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="pl-10 pr-10 border-navy/20 focus:border-gold focus:ring-gold/20 rounded-xl"
+                    className="pl-12 pr-12 border-2 border-gold/30 focus:border-gold focus:ring-gold/20 rounded-xl h-12"
                     placeholder="••••••••"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-navy/60 hover:text-navy transition-colors"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-navy/60 hover:text-gold transition-colors"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 </div>
                 {isLogin && (
                   <div className="text-right">
                     <Link
                       to="/forgot-password"
-                      className="text-sm text-gold hover:text-gold-dark font-medium transition-colors"
+                      className="text-gold hover:text-gold-dark font-bold transition-colors"
                     >
                       Forgot Password?
                     </Link>
@@ -194,31 +194,31 @@ const Auth = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-gold to-gold-light hover:from-gold-dark hover:to-gold text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-gold to-gold-light hover:from-gold-dark hover:to-gold text-navy font-bold py-4 rounded-2xl transition-all duration-500 transform hover:scale-105 shadow-luxury disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
               </Button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-navy/10">
-              <p className="text-center text-navy/60">
+            <div className="mt-10 pt-8 border-t border-gold/20">
+              <p className="text-center text-navy/70 text-lg">
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
                 <button
                   onClick={() => {
                     setIsLogin(!isLogin);
                     dispatch(clearError());
                   }}
-                  className="ml-2 text-gold hover:text-gold-dark font-semibold transition-colors"
+                  className="ml-2 text-gold hover:text-gold-dark font-bold transition-colors"
                 >
                   {isLogin ? 'Sign up' : 'Sign in'}
                 </button>
               </p>
             </div>
 
-            <div className="mt-6 text-center">
+            <div className="mt-8 text-center">
               <Link
                 to="/"
-                className="text-navy/60 hover:text-navy transition-colors text-sm font-medium"
+                className="text-navy/60 hover:text-navy transition-colors font-medium"
               >
                 ← Back to Home
               </Link>

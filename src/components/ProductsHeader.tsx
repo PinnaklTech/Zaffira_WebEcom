@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import ViewToggle from './ViewToggle';
+import { Filter, SortAsc } from 'lucide-react';
 
 interface ProductsHeaderProps {
   totalProducts: number;
@@ -36,15 +37,16 @@ const ProductsHeader = ({
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6">
+    <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-luxury border border-gold/20 p-6 sm:p-8 mb-8">
       {/* Results info and filters count */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex flex-col gap-2">
-          <span className="text-sm text-gray-600">
+          <span className="text-base text-navy/70 font-medium">
             Showing {startItem}-{endItem} of {totalProducts} results
           </span>
           {activeFiltersCount > 0 && (
-            <span className="text-xs bg-gold/10 text-gold px-3 py-1.5 rounded-full w-fit font-medium">
+            <span className="text-sm bg-gold/20 text-gold px-4 py-2 rounded-full w-fit font-bold border border-gold/30">
+              <Filter className="h-3 w-3 mr-1 inline" />
               {activeFiltersCount} filter{activeFiltersCount > 1 ? 's' : ''} applied
             </span>
           )}
@@ -54,17 +56,20 @@ const ProductsHeader = ({
       {/* Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <span className="text-sm text-gray-600 font-medium sm:whitespace-nowrap">Sort by:</span>
+          <span className="text-base text-navy font-bold sm:whitespace-nowrap flex items-center gap-2">
+            <SortAsc className="h-4 w-4 text-gold" />
+            Sort by:
+          </span>
           <Select value={sortBy} onValueChange={onSortChange}>
-            <SelectTrigger className="w-full sm:w-56 min-h-[48px] border-gray-200">
+            <SelectTrigger className="w-full sm:w-64 min-h-[52px] border-2 border-gold/30 rounded-2xl font-medium hover:border-gold transition-colors duration-300">
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg z-50">
+            <SelectContent className="glass-effect border-gold/20 shadow-luxury-lg z-50 rounded-2xl">
               {sortOptions.map((option) => (
                 <SelectItem 
                   key={option.value} 
                   value={option.value}
-                  className="cursor-pointer hover:bg-gray-50 min-h-[48px] flex items-center"
+                  className="cursor-pointer hover:bg-gold/10 min-h-[52px] flex items-center font-medium rounded-xl"
                 >
                   {option.label}
                 </SelectItem>

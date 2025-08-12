@@ -5,7 +5,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { X } from 'lucide-react';
+import { X, Filter, Tag, DollarSign, Star } from 'lucide-react';
 
 interface FilterOptions {
   categories: string[];
@@ -91,42 +91,48 @@ const ProductFilters = ({
     filters.inStockOnly;
 
   return (
-    <ScrollArea className="h-[calc(100vh-10rem)]">
-      <div className="space-y-4 pr-4">
+    <ScrollArea className="h-[calc(100vh-12rem)]">
+      <div className="space-y-6 pr-4">
         {/* Clear Filters */}
         {hasActiveFilters && (
-          <div className="flex items-center justify-between pb-1">
-            <span className="text-sm font-semibold text-navy">Active Filters</span>
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-base font-bold text-navy flex items-center gap-2">
+              <Filter className="h-4 w-4 text-gold" />
+              Active Filters
+            </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={clearAllFilters}
-              className="text-gold hover:text-gold-dark hover:bg-gold/10 h-8 px-2"
+              className="text-gold hover:text-gold-dark hover:bg-gold/10 h-9 px-3 rounded-xl font-medium"
             >
-              <X className="h-3 w-3 mr-1" />
+              <X className="h-4 w-4 mr-1" />
               Clear All
             </Button>
           </div>
         )}
 
         {/* Categories */}
-        <div className="space-y-3">
-          <h3 className="font-semibold text-navy text-base">Categories</h3>
-          <div className="space-y-1.5">
+        <div className="space-y-4">
+          <h3 className="font-playfair font-bold text-navy text-lg flex items-center gap-2">
+            <Tag className="h-5 w-5 text-gold" />
+            Categories
+          </h3>
+          <div className="space-y-3">
             {categories.map((category) => (
-              <div key={category.value} className="flex items-center space-x-2.5 py-0.5">
+              <div key={category.value} className="flex items-center space-x-3 py-1 hover:bg-gold/5 rounded-lg px-2 transition-colors duration-200">
                 <Checkbox
                   id={category.value}
                   checked={filters.categories.includes(category.value)}
                   onCheckedChange={(checked) => handleCategoryChange(category.value, checked as boolean)}
-                  className="w-4 h-4"
+                  className="w-5 h-5 border-2 border-gold/40 data-[state=checked]:bg-gold data-[state=checked]:border-gold"
                 />
                 <Label 
                   htmlFor={category.value} 
-                  className="text-sm cursor-pointer flex-1 flex justify-between items-center"
+                  className="cursor-pointer flex-1 flex justify-between items-center font-medium"
                 >
-                  <span className="font-medium">{category.label}</span>
-                  <span className="text-gray-500 text-xs font-normal">
+                  <span className="text-navy">{category.label}</span>
+                  <span className="text-navy/60 text-sm bg-gold/10 px-2 py-1 rounded-full">
                     ({productCounts[category.value] || 0})
                   </span>
                 </Label>
@@ -135,26 +141,29 @@ const ProductFilters = ({
           </div>
         </div>
 
-        <Separator className="my-3" />
+        <Separator className="my-6 bg-gold/20" />
 
         {/* Collections */}
-        <div className="space-y-3">
-          <h3 className="font-semibold text-navy text-base">Collections</h3>
-          <div className="space-y-1.5">
+        <div className="space-y-4">
+          <h3 className="font-playfair font-bold text-navy text-lg flex items-center gap-2">
+            <Star className="h-5 w-5 text-gold" />
+            Collections
+          </h3>
+          <div className="space-y-3">
             {collections.map((collection) => (
-              <div key={collection.value} className="flex items-center space-x-2.5 py-0.5">
+              <div key={collection.value} className="flex items-center space-x-3 py-1 hover:bg-gold/5 rounded-lg px-2 transition-colors duration-200">
                 <Checkbox
                   id={collection.value}
                   checked={filters.collections.includes(collection.value)}
                   onCheckedChange={(checked) => handleCollectionChange(collection.value, checked as boolean)}
-                  className="w-4 h-4"
+                  className="w-5 h-5 border-2 border-gold/40 data-[state=checked]:bg-gold data-[state=checked]:border-gold"
                 />
                 <Label 
                   htmlFor={collection.value} 
-                  className="text-sm cursor-pointer flex-1 flex justify-between items-center"
+                  className="cursor-pointer flex-1 flex justify-between items-center font-medium"
                 >
-                  <span className="font-medium">{collection.label}</span>
-                  <span className="text-gray-500 text-xs font-normal">
+                  <span className="text-navy">{collection.label}</span>
+                  <span className="text-navy/60 text-sm bg-gold/10 px-2 py-1 rounded-full">
                     ({collectionCounts[collection.value] || 0})
                   </span>
                 </Label>
@@ -163,12 +172,15 @@ const ProductFilters = ({
           </div>
         </div>
 
-        <Separator className="my-3" />
+        <Separator className="my-6 bg-gold/20" />
 
         {/* Price Range */}
-        <div className="space-y-3">
-          <h3 className="font-semibold text-navy text-base">Price Range</h3>
-          <div className="px-1 py-2">
+        <div className="space-y-4">
+          <h3 className="font-playfair font-bold text-navy text-lg flex items-center gap-2">
+            <DollarSign className="h-5 w-5 text-gold" />
+            Price Range
+          </h3>
+          <div className="px-2 py-4 bg-gold/5 rounded-2xl">
             <Slider
               value={filters.priceRange}
               onValueChange={handlePriceChange}
@@ -177,58 +189,58 @@ const ProductFilters = ({
               step={1000}
               className="w-full"
             />
-            <div className="flex justify-between text-sm text-gray-600 mt-2 font-medium">
-              <span>₹{filters.priceRange[0].toLocaleString('en-IN')}</span>
-              <span>₹{filters.priceRange[1].toLocaleString('en-IN')}</span>
+            <div className="flex justify-between text-navy font-bold mt-4">
+              <span className="bg-white px-3 py-1 rounded-full shadow-sm">₹{filters.priceRange[0].toLocaleString('en-IN')}</span>
+              <span className="bg-white px-3 py-1 rounded-full shadow-sm">₹{filters.priceRange[1].toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>
 
-        <Separator className="my-3" />
+        <Separator className="my-6 bg-gold/20" />
 
         {/* Availability */}
-        <div className="space-y-3">
-          <h3 className="font-semibold text-navy text-base">Availability</h3>
-          <div className="space-y-1.5">
-            <div className="flex items-center space-x-2.5 py-0.5">
+        <div className="space-y-4">
+          <h3 className="font-playfair font-bold text-navy text-lg">Availability</h3>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3 py-1 hover:bg-gold/5 rounded-lg px-2 transition-colors duration-200">
               <Checkbox
                 id="inStockOnly"
                 checked={filters.inStockOnly}
                 onCheckedChange={(checked) => onFiltersChange({ ...filters, inStockOnly: checked as boolean })}
-                className="w-4 h-4"
+                className="w-5 h-5 border-2 border-gold/40 data-[state=checked]:bg-gold data-[state=checked]:border-gold"
               />
-              <Label htmlFor="inStockOnly" className="text-sm cursor-pointer font-medium">
+              <Label htmlFor="inStockOnly" className="cursor-pointer font-medium text-navy">
                 In Stock Only
               </Label>
             </div>
           </div>
         </div>
 
-        <Separator className="my-3" />
+        <Separator className="my-6 bg-gold/20" />
 
         {/* Special Offers */}
-        <div className="space-y-3 pb-4">
-          <h3 className="font-semibold text-navy text-base">Special Offers</h3>
-          <div className="space-y-1.5">
-            <div className="flex items-center space-x-2.5 py-0.5">
+        <div className="space-y-4 pb-6">
+          <h3 className="font-playfair font-bold text-navy text-lg">Special Offers</h3>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3 py-1 hover:bg-gold/5 rounded-lg px-2 transition-colors duration-200">
               <Checkbox
                 id="isFeatured"
                 checked={filters.isFeatured}
                 onCheckedChange={(checked) => onFiltersChange({ ...filters, isFeatured: checked as boolean })}
-                className="w-4 h-4"
+                className="w-5 h-5 border-2 border-gold/40 data-[state=checked]:bg-gold data-[state=checked]:border-gold"
               />
-              <Label htmlFor="isFeatured" className="text-sm cursor-pointer font-medium">
+              <Label htmlFor="isFeatured" className="cursor-pointer font-medium text-navy">
                 Featured Products
               </Label>
             </div>
-            <div className="flex items-center space-x-2.5 py-0.5">
+            <div className="flex items-center space-x-3 py-1 hover:bg-gold/5 rounded-lg px-2 transition-colors duration-200">
               <Checkbox
                 id="onSale"
                 checked={filters.onSale}
                 onCheckedChange={(checked) => onFiltersChange({ ...filters, onSale: checked as boolean })}
-                className="w-4 h-4"
+                className="w-5 h-5 border-2 border-gold/40 data-[state=checked]:bg-gold data-[state=checked]:border-gold"
               />
-              <Label htmlFor="onSale" className="text-sm cursor-pointer font-medium">
+              <Label htmlFor="onSale" className="cursor-pointer font-medium text-navy">
                 On Sale
               </Label>
             </div>

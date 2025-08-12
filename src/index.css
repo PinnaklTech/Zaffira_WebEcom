@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -74,11 +77,16 @@
   body {
     @apply bg-background text-foreground;
     font-display: swap;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Optimize font loading */
   .font-playfair {
     font-display: swap;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   /* Smooth scrolling for better UX */
@@ -86,10 +94,17 @@
     scroll-behavior: smooth;
   }
 
-  /* Focus styles for accessibility */
+  /* Enhanced focus styles for luxury feel */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-navy;
+    @apply outline-2 outline-offset-2 outline-gold ring-2 ring-gold/20;
   }
+
+  /* Luxury button focus */
+  .btn-luxury:focus-visible {
+    @apply ring-4 ring-gold/30 outline-none;
+  }
+
+  /* Focus styles for accessibility */
 
   /* Remove default button focus styles */
   button:focus {
@@ -99,6 +114,30 @@
   /* Optimize image loading */
   img {
     @apply max-w-full h-auto;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Luxury selection styles */
+  ::selection {
+    @apply bg-gold/20 text-navy;
+  }
+
+  /* Scrollbar styling for luxury feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cream-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold/40 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold/60;
   }
 
   /* Performance optimizations */
@@ -129,6 +168,33 @@
     animation: fadeIn 0.5s ease-in-out;
   }
 
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out;
+  }
+
+  .luxury-gradient {
+    background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 50%, #F8F6F0 100%);
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #D4AF37 0%, #E6C866 50%, #D4AF37 100%);
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -137,6 +203,28 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 }

@@ -196,18 +196,18 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-ivory">
+    <div className="min-h-screen luxury-gradient">
       <Navigation />
-      <div className="pt-28">
+      <div className="pt-32">
         <div className="flex w-full max-w-7xl mx-auto">
           {/* Desktop Sidebar with Enhanced Scrollbar */}
-          <aside className="hidden lg:block w-80 flex-shrink-0">
-            <div className="sticky top-32">
-              <div className="bg-white rounded-lg shadow-sm mr-6 border border-gray-100">
-                <div className="p-5 border-b border-gray-100">
-                  <h2 className="text-xl font-playfair font-bold text-navy">Filters</h2>
+          <aside className="hidden lg:block w-88 flex-shrink-0">
+            <div className="sticky top-36">
+              <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-luxury mr-8 border border-gold/20">
+                <div className="p-6 border-b border-gold/20">
+                  <h2 className="text-2xl font-playfair font-bold text-navy">Filters</h2>
                 </div>
-                <div className="p-5">
+                <div className="p-6">
                   <ProductFilters
                     filters={filters}
                     onFiltersChange={setLocalFilters}
@@ -222,34 +222,34 @@ const Products = () => {
 
           {/* Main Content */}
           <main className="flex-1 min-w-0 px-4 sm:px-6 lg:px-0">
-            <div className="py-6">
+            <div className="py-8">
               <ProductBreadcrumb items={breadcrumbItems} />
               
               {/* Header */}
-              <div className="mb-8">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold text-navy mb-4">
+              <div className="mb-12 animate-fade-in">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-bold text-navy mb-6 leading-tight">
                   Our Collection
                 </h1>
-                <p className="text-gray-600 max-w-3xl leading-relaxed">
+                <p className="text-navy/70 max-w-4xl leading-relaxed text-lg">
                   Discover our exquisite selection of handcrafted jewelry pieces, each telling its own unique story.
                 </p>
               </div>
 
               {/* Mobile Filter Sheet */}
-              <div className="lg:hidden mb-6">
+              <div className="lg:hidden mb-8">
                 <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
                   <SheetTrigger asChild>
                     <Button
                       variant="outline"
-                      className="border-gold text-gold hover:bg-gold hover:text-navy min-h-[48px] px-4"
+                      className="border-2 border-gold text-gold hover:bg-gold hover:text-navy min-h-[52px] px-6 rounded-2xl font-bold transition-all duration-300"
                     >
-                      <Filter className="h-4 w-4 mr-2" />
+                      <Filter className="h-5 w-5 mr-2" />
                       Filters {activeFiltersCount > 0 && `(${activeFiltersCount})`}
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-full sm:max-w-md pt-20">
+                  <SheetContent side="left" className="w-full sm:max-w-md pt-24 glass-effect">
                     <SheetHeader className="pb-6">
-                      <SheetTitle className="text-navy font-playfair">Filters</SheetTitle>
+                      <SheetTitle className="text-navy font-playfair text-2xl font-bold">Filters</SheetTitle>
                     </SheetHeader>
                     <ProductFilters
                       filters={filters}
@@ -276,7 +276,7 @@ const Products = () => {
 
               {/* Loading indicator for filters */}
               {loading && (
-                <div className="text-center py-8">
+                <div className="text-center py-12">
                   <Loading message="Updating products..." />
                 </div>
               )}
@@ -284,26 +284,34 @@ const Products = () => {
               {/* Products Grid/List */}
               <div className={
                 view === 'grid' 
-                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                  : "space-y-6"
+                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+                  : "space-y-8"
               }>
                 {paginatedProducts.map((product: Product) => (
-                  <EnhancedProductCard 
+                  <div 
                     key={product._id} 
-                    product={product} 
-                    view={view}
-                  />
+                    className="animate-fade-in" 
+                    style={{ animationDelay: `${Math.min(0.1 * (paginatedProducts.indexOf(product)), 0.5)}s` }}
+                  >
+                    <EnhancedProductCard 
+                      product={product} 
+                      view={view}
+                    />
+                  </div>
                 ))}
               </div>
 
               {/* No Results */}
               {filteredProducts.length === 0 && !loading && (
-                <div className="text-center py-16">
-                  <h3 className="text-xl font-playfair text-navy mb-4">No products found</h3>
-                  <p className="text-gray-600 mb-6">Try adjusting your filters to see more products.</p>
+                <div className="text-center py-20">
+                  <div className="bg-gold/10 rounded-full p-6 w-20 h-20 mx-auto mb-6">
+                    <Search className="h-8 w-8 text-gold mx-auto" />
+                  </div>
+                  <h3 className="text-2xl font-playfair font-bold text-navy mb-4">No products found</h3>
+                  <p className="text-navy/70 mb-8 text-lg">Try adjusting your filters to see more products.</p>
                   <Button
                     onClick={clearAllFiltersAction}
-                    className="bg-gold hover:bg-gold-dark text-navy min-h-[48px] px-6"
+                    className="bg-gold hover:bg-gold-dark text-navy min-h-[52px] px-8 font-bold rounded-2xl transition-all duration-300 hover:scale-105"
                   >
                     Clear All Filters
                   </Button>
@@ -312,19 +320,19 @@ const Products = () => {
 
               {/* Enhanced Pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-4 mt-12">
+                <div className="flex justify-center items-center gap-4 mt-16">
                   {/* Mobile: Simple prev/next */}
                   <div className="flex sm:hidden items-center gap-2">
                     <Button
                       variant="outline"
                       onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
-                      className="border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[48px] px-4"
+                      className="border-2 border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[52px] px-6 rounded-2xl font-bold"
                     >
                       Previous
                     </Button>
                     
-                    <span className="px-4 py-2 text-sm text-navy bg-white border rounded-lg min-h-[48px] flex items-center">
+                    <span className="px-6 py-3 text-navy bg-white border-2 border-gold/20 rounded-2xl min-h-[52px] flex items-center font-bold">
                       {currentPage} of {totalPages}
                     </span>
                     
@@ -332,7 +340,7 @@ const Products = () => {
                       variant="outline"
                       onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                       disabled={currentPage === totalPages}
-                      className="border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[48px] px-4"
+                      className="border-2 border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[52px] px-6 rounded-2xl font-bold"
                     >
                       Next
                     </Button>
@@ -344,7 +352,7 @@ const Products = () => {
                       variant="outline"
                       onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                       disabled={currentPage === 1}
-                      className="border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[48px]"
+                      className="border-2 border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[52px] px-6 rounded-2xl font-bold"
                     >
                       Previous
                     </Button>
@@ -358,10 +366,9 @@ const Products = () => {
                             variant={currentPage === page ? "default" : "outline"}
                             onClick={() => setCurrentPage(page)}
                             className={currentPage === page 
-                              ? "bg-gold text-navy min-h-[48px]" 
-                              : "border-gold text-gold hover:bg-gold hover:text-navy min-h-[48px]"
+                              ? "bg-gold text-navy min-h-[52px] w-12 rounded-2xl font-bold shadow-luxury" 
+                              : "border-2 border-gold text-gold hover:bg-gold hover:text-navy min-h-[52px] w-12 rounded-2xl font-bold"
                             }
-                            size="sm"
                           >
                             {page}
                           </Button>
@@ -373,7 +380,7 @@ const Products = () => {
                       variant="outline"
                       onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                       disabled={currentPage === totalPages}
-                      className="border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[48px]"
+                      className="border-2 border-gold text-gold hover:bg-gold hover:text-navy disabled:opacity-50 min-h-[52px] px-6 rounded-2xl font-bold"
                     >
                       Next
                     </Button>
